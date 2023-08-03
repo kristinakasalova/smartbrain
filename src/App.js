@@ -17,9 +17,10 @@ const initialState = {
   route: 'signin',
   isSignedIn: false,
   user: {
-    id:'',
-    name:'',
-    entries:0,
+    id: '',
+    name: '',
+    email: '',
+    entries: 0,
     joined: ''
   }
 }
@@ -30,17 +31,18 @@ class App extends Component {
     this.state = initialState;
   }
 
-  // componentDidMount() {
-  //   fetch('http://localhost:3000/')
-  //   .then(response => response.json())
-  //   .then(console.log)
-  // }
+  componentDidMount() {
+    fetch('http://localhost:3000/')
+    .then(response => response.json())
+    .then(console.log)
+  }
 
 loadUser = (data) => {
-  this.setState( {user: {
+  this.setState({user: {
     id: data.id,
-    name:data.name,
-    entries:data.entries,
+    name: data.name,
+    email: data.email,
+    entries: data.entries,
     joined: data.joined
   }})
 }
@@ -127,7 +129,7 @@ loadUser = (data) => {
         {route === 'home' 
           ? <div> 
             <Logo />
-            <Rank />
+            <Rank name={this.state.user.name} entries={this.state.user.entries} />
             <ImageLinkForm
               onInputChange={this.onInputChange}
               onButtonSubmit={this.onButtonSubmit}
@@ -136,7 +138,7 @@ loadUser = (data) => {
           </div>
         : (
           route === 'signin'
-          ? <Signin onRouteChange={this.onRouteChange} />
+          ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
           : <Register loadUser = { this.loadUser} onRouteChange={this.onRouteChange} />
         ) 
         }
