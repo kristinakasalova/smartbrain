@@ -98,16 +98,31 @@ loadUser = (data) => {
 
       fetch('https://api.clarifai.com/v2/models/face-detection/versions/6dc7e46bc9124c5c8824be4822abe105/outputs', requestOptions)
         .then(response => response.json())
-        .then(result => { this.displayFaceBox(
+        .then(result => { 
+          if (result) {
+            fetch('http://localhost:3000/image', {
+              method: 'put',
+              headers: {'Content-Type':'application/json'},
+              body: JSON.stringify({
+                  id:this.state.user.id
+              })  
+          })
+            .then(response => response.json())
+            .then(count => {
+              this.setState(Object.assign(this.state.user,{entries: count}))
+              })
+    }})
+          }
+          this.displayFaceBox(
           this.calculateFaceLocation(result)
         )
            this.calculateFaceLocation( result);
-        })
+        }
         .catch(error => console.log('error', error));
     }
 
     returnClarifaiRequestOptions(this.state.input);
-  }
+  
 
   onRouteChange = (route) => {
     if (route === 'signout'){
@@ -145,6 +160,6 @@ loadUser = (data) => {
         </div>
     );
   }
-}
+
 
 export default App;
