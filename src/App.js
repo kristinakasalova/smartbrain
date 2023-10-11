@@ -31,7 +31,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:3000/")
+    fetch("https://smartbrain-be-2qg8.onrender.com/")
       .then((response) => response.json())
       .then(console.log);
   }
