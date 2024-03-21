@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import Navigation from "./components/navigation/Navigation";
 import Logo from "./components/logo/Logo.js";
 import ImageLinkForm from "./components/imagelinkform/ImageLinkForm.js";
-import Signin from "./components/Signin/signin.js";
-import Register from "./components/Register/register.js";
+// import Signin from "./components/Signin/signin.js";
+// import Register from "./components/Register/register.js";
 import FaceRecognition from "./components/facerecognition/FaceRecognition.js";
 import Rank from "./components/rank/Rank.js";
 import "./App.css";
@@ -31,7 +31,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch("https://smartbrain-be-2qg8.onrender.com/")
+    fetch('https://smartbrain-be-2qg8.onrender.com')
       .then((response) => response.json())
       .then(console.log);
   }
@@ -99,13 +99,13 @@ class App extends Component {
       };
 
       fetch(
-        "https://api.clarifai.com/v2/models/face-detection/versions/6dc7e46bc9124c5c8824be4822abe105/outputs",
+        "https://api.clarifai.com/v2/inputs/face-detection/versions/6dc7e46bc9124c5c8824be4822abe105/outputs",
         requestOptions
       )
         .then((response) => response.json())
         .then((result) => {
           if (result) {
-            fetch("http://localhost:3000/image", {
+            fetch("https://smartbrain-be-2qg8.onrender.com/image", {
               method: "put",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
@@ -123,12 +123,7 @@ class App extends Component {
         });
     };
 
-    //  this.calculateFaceLocation(result);
   };
-  //.catch(error => console.log('error', error))
-
-
-//  returnClarifaiRequestOptions(this.state.input);
 
 onRouteChange = (route) => {
   if (route === "signout") {
@@ -141,12 +136,12 @@ onRouteChange = (route) => {
 };
 
 render() {
-  const { isSignedIn, imageUrl, route, box } = this.state;
+  const { isSignedIn, imageUrl, /*route,*/ box } = this.state;
   return (
     <div className="App">
       <ParticlesBg className="Particles" type="circle" bg={true} />
       <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
-      {route === "home" ? (
+       {/* {route === "home" ? ( */
         <div>
           <Logo />
           <Rank name={this.state.user.name} entries={this.state.user.entries} />
@@ -156,13 +151,16 @@ render() {
           />
           <FaceRecognition box={box} imageUrl={imageUrl} />
         </div>
-      ) : route === "signin" ? (
+      /*{ ) : route === "signin" ? (
         <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
       ) : (
-        <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
-      )}
-    </div>
-  );
+      <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+      )*/
+    }
+    </div> 
+    //}
+  )
+  ;
 }
 }
 
