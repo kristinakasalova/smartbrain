@@ -17,7 +17,7 @@ const initialState = {
   isSignedIn: false,
   user: {
     id: "",
-    name: "",
+    name: "Hello",
     email: "",
     entries: 0,
     joined: "",
